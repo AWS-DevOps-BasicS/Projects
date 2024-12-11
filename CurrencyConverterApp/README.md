@@ -1,4 +1,7 @@
 # CurrencyConverterApp
+
+## File Structure
+
 Here is the structure of file:
 
 ```css
@@ -26,9 +29,11 @@ CurrencyConverterApp/
 
 ```
 
-### **_To build and deploy the Currency Converter application on Ubuntu, follow the steps below. This includes installing required tools, building the WAR package, and deploying it to Tomcat._**
+### Build and Deploy the Currency Converter Application on Ubuntu
 
-#### Step 1: Install Java and Apache Ant
+Follow these steps to install required tools, build the WAR package, and deploy it to GlassFish.
+
+#### Step 1: Install Java and Maven
 1. **Update Packages:**
 ```bash
 sudo apt update
@@ -65,7 +70,7 @@ mvn clean package
 ```
 3. **Verify the WAR File:**
 
-* After the build, the WAR file will be created in the `target` directory:
+* The WAR file will be created in the `target` directory:
 ```bash
 /home/username/CurrencyConverterApp/target/CurrencyConverterApp-1.0.0.war 
 ```
@@ -77,6 +82,9 @@ wget https://download.eclipse.org/ee4j/glassfish/glassfish-6.2.5.zip
 sudo apt install unzip
 unzip glassfish-6.2.5.zip
 sudo mv glassfish6 /opt/
+```
+2. **Start GlassFish:**
+```bash
 cd /opt/glassfish6/bin/
 ./asadmin start-domain
 ./asadmin enable-secure-admin
@@ -87,15 +95,14 @@ sudo ./asadmin enable-secure-admin
 ![preview](images/java11.png)
 ![preview](images/java12.png)
 
-2. **Copy the WAR File to Tomcat's `webapps` Directory:**
+3. **Deploy the WAR File:**
 ```bash
 sudo cp Projects/CurrencyConverterApp/target/Curreubuntu@ip-172-31-33-34:~$ sudo cp Projects/CurrencyConverterApp/target/CurrencyConverterApp-1.0.0.war /opt/glassfish6/glassfish/domains/domain1/applications/
 sudo ./asadmin deploy /opt/glassfish6/glassfish/domains/domain1/applications/CurrencyConverterApp-1.0.0.war
 ```
 ![preview](images/java13.png)
-1. **Check Deployment:**
 
-* Open a browser and visit:
+4. **Check Deployment:** Open a browser and visit:
 ```
 http://54.211.82.142:8080/CurrencyConverterApp-1.0.0/
 ```
@@ -104,19 +111,32 @@ http://54.211.82.142:8080/CurrencyConverterApp-1.0.0/
 ### JFrog Artifactory 
 * Taken ubuntu 22.04 and installed java 11
 * Get the vesion from jfrog page [refer here](https://jfrog.com/download-legacy/)
-
+  
+#### Step 1: Install Artifactory
+1. **Update and Install Java 11:**
 ```bash
 sudo apt update
 sudo apt install openjdk-11-jdk net-tools -y
+```
+2. **Download and Install Artifactory:**
+```bash
 wget https://releases.jfrog.io/artifactory/artifactory-pro-debs/pool/jfrog-artifactory-pro/jfrog-artifactory-pro-7.55.2.deb?_gl=1*1dq24qp*_gcl_aw*R0NMLjE3MzM4MTE3MzcuQ2owS0NRaUF4OXE2QmhDREFSSXNBQ3dVeHU3bGRGbkxGRXpTa0ZVeVRzWXo3bEI1Wmp2ZTFOdkwzeTdxT1dDTGVpTUJSdzBUVFpyYjd0WWFBa2JrRUFMd193Y0I.*_gcl_au*MTgzNjY2NTQ4NS4xNzMzODA2NjU4*FPAU*MTgzNjY2NTQ4NS4xNzMzODA2NjU4*_ga*MjAxNjE1MzE3NC4xNzE4MjY1Nzk3*_ga_SQ1NR9VTFJ*MTczMzgyMjYzMS4xMC4xLjE3MzM4MjI5NjMuMC4wLjE5NTIxNjU2MTc.*_fplc*S3RpOVB4NXZMdmxueDRkaDd0SndtJTJGWWMzZk8yJTJCaVY3V3dnejFLbWozUW9aeGdiUG5vJTJCMjd1em5ER1RoTmpRSmVOWVl5NVNpdkhQNmNUb1FUMWlmNkVicEZjUWNkVkx0cjd0Sk81Wm14TSUyQnBNdVpWa2d5SlhwN3ZFVGhMSHclM0QlM0Q.
 mv 'jfrog-artifactory-pro-7.55.2.deb?_gl=1*1dq24qp*_gcl_aw*R0NMLjE3MzM4MTE3MzcuQ2owS0NRaUF4OXE2QmhDREFSSXNBQ3dVeHU3bGRGbkxGRXpTa0ZVeVRzWXo3bEI1Wmp2ZTFOdkwzeTdxT1dDTGVpTUJSdzBUVFpyYjd0WWFBa2JrRUFMd193Y0I.*_gcl_au*MTgzNjY2NTQ4NS4xNzMzODA2NjU4' jfrog-artifactory-pro-7.55.2.deb
 sudo dpkg -i jfrog-artifactory-pro-7.55.2.deb
 sudo systemctl start artifactory.service
 sudo systemctl enable artifactory.service
+```
+3. **Check Artifactory Status:**
+```bash
 sudo systemctl status artifactory.service
 ```
+4. **Access Artifactory:** Open a browser and navigate to:
 
-* Provide default admin username as **“admin”** and password as **“password”** then click on the Login button. You will see the Getting Started page.
+```
+http://<server-ip>:8082
+```
+
+Use default credentials: `admin/password`.
 
 ![preview](images/java2.png)
 ![preview](images/java3.png)
@@ -138,16 +158,14 @@ sudo systemctl status artifactory.service
 ![preview](images/java10.png)
 
 * To store your artifact (WAR file) for the CurrencyConverterApp in JFrog Artifactor.
-  1. **Get Repository Details:**
+
+**Get Repository Details:**
    
    ![preview](images/java15.png)
 
-  2. **Update Maven Settings**
-   
-   1. **Configure settings.xml:** 
-      * Edit your Maven settings file, usually located at `~/.m2/settings.xml`. If it doesn’t exist, create one.
-      * Add the Artifactory credentials and repository configuration
-      * Replace YourUsername and YourPassword with your actual Artifactory credentials.
+#### Step 2: Configure Maven for Artifactory
+2. **Update Maven settings.xml:** Edit or create `~/.m2/settings.xml` with the following:
+
 ```xml
 <settings>
     <servers>
@@ -159,8 +177,7 @@ sudo systemctl status artifactory.service
     </servers>
 </settings>
 ```
-  2. **Update Your pom.xml**
-    * Add distribution management details for your Artifactory repository:
+2. **Update pom.xml for Deployment:** Add distribution management details:
 ```xml
 <distributionManagement>
     <repository>
@@ -169,13 +186,15 @@ sudo systemctl status artifactory.service
     </repository>
 </distributionManagement>
 ```
-  3. **Deploy the Artifact**
-    * Run the following Maven command to deploy the artifact to Artifactory: `mvn clean deploy`
-    * Package the project into a WAR file.
-    * Upload the artifact to the specified Artifactory repository.
+3. **Deploy the Artifact:** Run the following Maven command:
+```bash
+mvn clean deploy
+```
   
   ![preview](images/java16.png)
-  4. **Verify Deployment**
+
+4. **Verify Deployment**
+
     * Log in to your Artifactory instance.
     * Navigate to the currency-repo-libs-release-local repository.
     * Confirm the artifact is available under the appropriate group and artifact ID path.
