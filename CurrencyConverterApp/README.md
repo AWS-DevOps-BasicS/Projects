@@ -3,21 +3,27 @@ Here is the structure of file:
 
 ```css
 CurrencyConverterApp/
-├── build.xml
+├── pom.xml                       # Maven Project Object Model (POM) file
 ├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── example/
-│   │   │           └── currencyconverter/
-│   │   │               └── CurrencyConverterServlet.java
-│   │   ├── webapp/
-│   │       ├── index.html
-│   │       ├── WEB-INF/
-│   │           ├── web.xml
-│   │           └── result.jsp
-├── lib/
-│   └── jakarta.servlet-api-5.0.0.jar
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── example/
+│       │           └── currencyconverter/
+│       │               └── CurrencyConverterServlet.java  # Servlet for conversion logic
+│       ├── resources/
+│       │   └── META-INF/
+│       │       └── context.xml  # GlassFish-specific configuration (optional)
+│       └── webapp/
+│           ├── WEB-INF/
+│           │   ├── web.xml         # Web application configuration
+│           │   └── glassfish-web.xml  # GlassFish-specific configuration (optional)
+│           ├── index.html          # Main page with form for currency conversion
+│           ├── result.html         # Page to display the conversion result
+│           └── convert.js          # JavaScript to handle AJAX requests
+└── target/
+    └── CurrencyConverterApp.war  # WAR file generated after build
+
 ```
 
 ### **_To build and deploy the Currency Converter application on Ubuntu, follow the steps below. This includes installing required tools, building the WAR package, and deploying it to Tomcat._**
@@ -35,56 +41,62 @@ sudo apt install openjdk-17-jdk -y
 ```bash
 java -version
 ```
-4. **Install Apache Ant:**
+4. **Install maven:**
 ```bash
-sudo apt install ant -y
+sudo apt install maven -y
 ```
 5. **Verify Ant Installation:**
 ```bash
-ant -version
+mvn -version
 ```
 #### Step 2: Set Up the Project
 1. **Clone the code**
 ```bash 
-git clone https://github.com/AWS-DevOps-BasicS/CurrencyConverterApp.git
+git clone https://github.com/AWS-DevOps-BasicS/Projects.git
 ```
 #### Step 3: Build the WAR File
 1. **Navigate to the Project Directory:**
 ```bash
-cd /home/username/CurrencyConverterApp
+cd Projects/CurrencyConverterApp
 ```
 2. **Run the Build Command:**
 ```bash
-ant clean
-ant dist
+mvn clean package
 ```
 3. **Verify the WAR File:**
 
-* After the build, the WAR file will be created in the `dist` directory:
+* After the build, the WAR file will be created in the `target` directory:
 ```bash
-/home/username/CurrencyConverterApp/dist/CurrencyConverterApp.war
+/home/username/CurrencyConverterApp/target/CurrencyConverterApp-1.0.0.war 
 ```
-#### Step 4: Deploy to Tomcat
-1. **Install tomcat:**
+#### Step 4: Deploy to Glassfish
+1. **Install GlassFish:**
 ```bash
 # in /home/ubuntu/
-wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.97/bin/apache-tomcat-9.0.97.tar.gz
-tar -xvf apache-tomcat-9.0.97.tar.gz
+wget https://download.eclipse.org/ee4j/glassfish/glassfish-6.2.5.zip
+sudo apt install unzip
+unzip glassfish-6.2.5.zip
+sudo mv glassfish6 /opt/
+cd /opt/glassfish6/bin/
+./asadmin start-domain
+./asadmin enable-secure-admin
+sudo ./asadmin change-admin-password # to change the password
+sudo ./asadmin enable-secure-admin
+./asadmin restart-domain
 ```
-2. **start the tomcat server**
+![preview](images/java11.png)
+![preview](images/java12.png)
+
+2. **Copy the WAR File to Tomcat's `webapps` Directory:**
 ```bash
-cd apache-tomcat-9.0.97/bin
-./startup.sh
+sudo cp Projects/CurrencyConverterApp/target/Curreubuntu@ip-172-31-33-34:~$ sudo cp Projects/CurrencyConverterApp/target/CurrencyConverterApp-1.0.0.war /opt/glassfish6/glassfish/domains/domain1/applications/
+sudo ./asadmin deploy /opt/glassfish6/glassfish/domains/domain1/applications/CurrencyConverterApp-1.0.0.war
 ```
-3. **Copy the WAR File to Tomcat's `webapps` Directory:**
-```bash
-cp CurrencyConverterApp/dist/CurrencyConverterApp.war apache-tomcat-9.0.97/webapps/
-```
-4. **Check Deployment:**
+1. **Check Deployment:**
 
 * Open a browser and visit:
 ```
-http://<server-ip>:8080/CurrencyConverterApp/
+http://<server-ip>:4848/CurrencyConverterApp/
 ```
 ![preview](images/java1.png)
 
