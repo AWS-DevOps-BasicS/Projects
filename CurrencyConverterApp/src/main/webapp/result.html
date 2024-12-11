@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Result</title>
+</head>
+<body>
+    <h1>Currency Conversion Result</h1>
+    
+    <div id="result">
+        <!-- This section can be updated dynamically with JavaScript if required -->
+        <p id="conversion-result"></p>
+    </div>
+
+    <a href="index.html">Back to Converter</a>
+
+    <script>
+        // Example of handling the result dynamically
+        // This would typically be done after receiving data from the server (using JavaScript to fetch result)
+        let result = window.localStorage.getItem("conversionResult");
+        document.getElementById('conversion-result').innerText = result || "No conversion performed.";
+    </script>
+</body>
+</html>
