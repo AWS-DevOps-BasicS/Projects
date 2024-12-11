@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <script>
+        function convertCurrency(event) {
+            event.preventDefault();  // Prevent the default form submission
+
+            // Get form values
+            const fromCurrency = document.getElementById("fromCurrency").value;
+            const toCurrency = document.getElementById("toCurrency").value;
+            const amount = document.getElementById("amount").value;
+
+            // Prepare the data to send
+            const data = new FormData();
+            data.append("fromCurrency", fromCurrency);
+            data.append("toCurrency", toCurrency);
+            data.append("amount", amount);
+
+            // Create an XMLHttpRequest to send the form data
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/convert", true);
+            xhr.setRequestHeader("Accept", "text/html");  // We want the HTML response
+
+            // On success, update the page with the result
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Update the page with the result
+                    document.getElementById("result").innerHTML = xhr.responseText;
+                } else {
+                    document.getElementById("result").innerHTML = "Error: Unable to process the request.";
+                }
+            };
+
+            // Send the data to the server
+            xhr.send(data);
+        }
+    </script>
+</head>
+<body>
+    <h1>Currency Converter</h1>
+
+    <!-- Form for conversion -->
+    <form id="currencyForm" onsubmit="convertCurrency(event)">
+        <label for="fromCurrency">From Currency:</label>
+        <select id="fromCurrency" name="fromCurrency" required>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+        </select><br><br>
+
+        <label for="toCurrency">To Currency:</label>
+        <select id="toCurrency" name="toCurrency" required>
+            <option value="INR">INR</option>
+        </select><br><br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" step="0.01" required><br><br>
+
+        <button type="submit">Convert</button>
+    </form>
+
+    <div id="result"></div>  <!-- This is where the result will appear -->
+</body>
+</html>
