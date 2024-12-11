@@ -18,6 +18,7 @@ public class CurrencyConverterServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+        // Predefined exchange rates
         exchangeRates.put("USD_TO_INR", 82.5);
         exchangeRates.put("EUR_TO_INR", 90.0);
         exchangeRates.put("GBP_TO_INR", 103.2);
@@ -26,6 +27,7 @@ public class CurrencyConverterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String fromCurrency = request.getParameter("fromCurrency");
         String toCurrency = request.getParameter("toCurrency");
         String amountStr = request.getParameter("amount");

@@ -10,7 +10,6 @@
     <version>1.0.0</version>
     <packaging>war</packaging>
 
-    <!-- Specify Java version -->
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -32,21 +31,11 @@
             <version>2.0.0</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- Jakarta EE API (Optional for full EE features) -->
-        <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>9.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Other dependencies can go here -->
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Maven War Plugin to package the web application into a WAR file -->
+            <!-- Maven War Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -60,7 +49,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Maven Compiler Plugin to compile the Java code with Java 17 -->
+            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
