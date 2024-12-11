@@ -137,4 +137,47 @@ sudo systemctl status artifactory.service
 ![preview](images/java9.png)
 ![preview](images/java10.png)
 
-* 
+* To store your artifact (WAR file) for the CurrencyConverterApp in JFrog Artifactor.
+  1. **Get Repository Details:**
+   
+   ![preview](images/java15.png)
+
+  2. **Update Maven Settings**
+   
+   1. **Configure settings.xml:** 
+      * Edit your Maven settings file, usually located at `~/.m2/settings.xml`. If it doesn’t exist, create one.
+      * Add the Artifactory credentials and repository configuration
+      * Replace YourUsername and YourPassword with your actual Artifactory credentials.
+```xml
+<settings>
+    <servers>
+        <server>
+            <id>artifactory-release</id>
+            <username>your-artifactory-username</username>
+            <password>your-artifactory-password</password>
+        </server>
+    </servers>
+</settings>
+```
+  2. **Update Your pom.xml**
+    * Add distribution management details for your Artifactory repository:
+```xml
+<distributionManagement>
+    <repository>
+        <id>artifactory-release</id>
+        <url>http://23.22.73.8:8082/artifactory/currency-repo-libs-release-local/</url>
+    </repository>
+</distributionManagement>
+```
+  3. **Deploy the Artifact**
+    * Run the following Maven command to deploy the artifact to Artifactory: `mvn clean deploy`
+    * Package the project into a WAR file.
+    * Upload the artifact to the specified Artifactory repository.
+  
+  ![preview](images/java16.png)
+  4. **Verify Deployment**
+    * Log in to your Artifactory instance.
+    * Navigate to the currency-repo-libs-release-local repository.
+    * Confirm the artifact is available under the appropriate group and artifact ID path.
+
+![preview](images/java14.png)
