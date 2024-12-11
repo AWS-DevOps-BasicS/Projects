@@ -92,15 +92,16 @@ sudo ./asadmin enable-secure-admin
 sudo cp Projects/CurrencyConverterApp/target/Curreubuntu@ip-172-31-33-34:~$ sudo cp Projects/CurrencyConverterApp/target/CurrencyConverterApp-1.0.0.war /opt/glassfish6/glassfish/domains/domain1/applications/
 sudo ./asadmin deploy /opt/glassfish6/glassfish/domains/domain1/applications/CurrencyConverterApp-1.0.0.war
 ```
+![preview](images/java13.png)
 1. **Check Deployment:**
 
 * Open a browser and visit:
 ```
-http://<server-ip>:4848/CurrencyConverterApp/
+http://54.211.82.142:8080/CurrencyConverterApp-1.0.0/
 ```
 ![preview](images/java1.png)
 
-### JFrog Artifactory
+### JFrog Artifactory 
 * Taken ubuntu 22.04 and installed java 11
 * Get the vesion from jfrog page [refer here](https://jfrog.com/download-legacy/)
 
@@ -136,5 +137,4 @@ sudo systemctl status artifactory.service
 ![preview](images/java9.png)
 ![preview](images/java10.png)
 
-* Now, In build.xml file we have to add details of this repository of jfrog artifactory so while building the artifact that artifact will store in the jfrog artifactory.
-* I tried to do the process with ant as build tool but jfrog is not supporting and involving maven. SO instead of that I will use maven as build tool.
+* 

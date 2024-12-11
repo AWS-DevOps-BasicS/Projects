@@ -62,4 +62,11 @@
         </plugins>
     </build>
 
+    <!-- Add distributionManagement section for Artifactory -->
+    <distributionManagement>
+        <repository>
+            <id>artifactory-release</id>
+            <url>http://23.22.73.8:8082/artifactory/currency-repo-libs-release-local/</url>
+        </repository>
+    </distributionManagement>
 </project>
